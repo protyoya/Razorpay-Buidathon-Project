@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kaira — Agentic Checkout</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head><body>
+<div class="stage">
+
+  <!-- ── chat ───────────────────────────────────────────── -->
+  <div class="phone">
+    <header class="wa-head">
+      <div class="avatar">KC</div>
+      <div class="who"><b>Kurta Company</b><span id="presence">online</span></div>
+      <span class="wa-badge">Kaira</span>
+    </header>
+
+    <div id="chat" class="chat"></div>
+    <div id="tiles" class="tiles"></div>
+
+    <div id="approval" class="approval hidden"></div>
+
+    <!-- voice dock: sits under the chat, never covers it -->
+    <div id="voicedock" class="voicedock hidden">
+      <canvas id="blob"></canvas>
+      <div class="vinfo">
+        <div id="vstatus" class="vstatus">Listening…</div>
+        <div id="vheard" class="vheard"></div>
+      </div>
+      <div class="vctl">
+        <button id="v-mute" class="vbtn" title="Pause listening">Pause</button>
+        <button id="v-close" class="vbtn close" title="Back to typing">✕</button>
+      </div>
+    </div>
+
+    <form id="composer" class="composer">
+      <button type="button" id="plus" class="c-icon" aria-label="Browse the shop" title="Browse the shop">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">
+          <path d="M12 5v14M5 12h14"/>
+        </svg>
+      </button>
+
+      <input id="input" autocomplete="off" placeholder="Ask anything…" />
+
+      <button type="button" id="mic" class="c-icon" aria-label="Dictate a message" title="Dictate a message">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+             stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="2.5" width="6" height="11.5" rx="3"/>
+          <path d="M5.5 11.5v.5a6.5 6.5 0 0 0 13 0v-.5"/>
+          <path d="M12 18.5V21.5"/>
+        </svg>
+      </button>
+
+      <button type="submit" id="primary" class="c-primary" aria-label="Voice mode" title="Voice mode">
+        <svg class="i-wave" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.9" stroke-linecap="round">
+          <path d="M4 10.5v3M8 7v10M12 4.5v15M16 7v10M20 10.5v3"/>
+        </svg>
+        <svg class="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 19V5M5 12l7-7 7 7"/>
+        </svg>
+      </button>
+    </form>
+  </div>
+
+  <!-- ── cart (top) + shop (bottom) ─────────────────────── -->
+  <aside class="sidecol">
+    <section class="panel cartpane">
+      <h3>Cart <span class="pill" id="cart-count">0 items</span></h3>
+      <div id="cart-lines" class="cartlines"><p class="empty">Nothing yet.</p></div>
+      <div class="carttotal"><span>Total</span><b id="cart-total">₹0</b></div>
+    </section>
+
+    <section class="panel shoppane">
+      <h3>Kurta Company</h3>
+      <p class="shopblurb">18 pieces in stock — kurtas, layering, footwear and accessories.</p>
+      <button id="explore" class="cta">Explore shop</button>
+      <label class="toggle"><input type="checkbox" id="fail-toggle"> Simulate payment failure</label>
+      <button id="reset" class="ghost">Reset demo</button>
+    </section>
+  </aside>
+</div>
+
+<!-- ── audit drawer (collapsed by default) ─────────────────── -->
+<button id="audit-toggle" class="audit-toggle" aria-expanded="false"
+        aria-controls="auditdrawer" title="Show the audit trail">
+  <span class="at-label">Audit trail</span>
+  <span class="pill" id="audit-count">0</span>
+</button>
+
+<aside id="auditdrawer" class="auditdrawer" aria-hidden="true">
+  <header class="dr-head">
+    <h3>Audit trail <span class="pill" id="integrity">verifying…</span></h3>
+    <button id="audit-close" class="dr-close" aria-label="Hide audit trail">✕</button>
+  </header>
+  <div id="trail" class="trail"></div>
+  <div class="mandate">
+    <h3>Spend mandate <span class="pill" id="mandate-id"></span></h3>
+    <div class="bar"><span>Auto-approve up to</span><b id="m-auto"></b></div>
+    <div class="bar"><span>Hard ceiling / order</span><b id="m-hard"></b></div>
+    <div class="bar"><span>Left this month</span><b id="m-left"></b></div>
+  </div>
+</aside>
+
+<!-- ── explore shop overlay ────────────────────────────────── -->
+<div id="shop" class="shop hidden" role="dialog" aria-modal="true" aria-label="Shop">
+  <div class="shop-inner">
+    <header class="shop-head">
+      <h2>The shop</h2>
+      <button id="shop-close" class="dr-close" aria-label="Close">✕</button>
+    </header>
+    <div id="shop-grid" class="shop-grid"></div>
+  </div>
+</div>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script type="module" src="app.js"></script>
+</body></html>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="White Cotton Pyjama">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#f7f4ef"/><stop offset="1" stop-color="#e8e2d8"/></linearGradient></defs>
+  <rect width="200" height="200" fill="url(#bg)"/>
+  <ellipse cx="100" cy="180" rx="52" ry="7" fill="#000" opacity=".07"/>
+  
+    <path d="M70 40 L130 40 L136 76 L124 172 L106 172 L100 96 L94 172 L76 172 L64 76 Z" fill="#f2f0ea"/>
+    <path d="M70 40 L130 40" stroke="#969591" stroke-width="4"/>
+    <path d="M100 96 L100 44" stroke="#969591" stroke-width="1.5" opacity=".5"/>
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Brass Kurta Button Set">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#f7f4ef"/><stop offset="1" stop-color="#e8e2d8"/></linearGradient></defs>
+  <rect width="200" height="200" fill="url(#bg)"/>
+  <ellipse cx="100" cy="180" rx="52" ry="7" fill="#000" opacity=".07"/>
+  
+    <circle cx="78" cy="82" r="17" fill="#c9a227" stroke="#7d6418" stroke-width="2"/>
+    <circle cx="122" cy="82" r="17" fill="#c9a227" stroke="#7d6418" stroke-width="2"/>
+    <circle cx="78" cy="126" r="17" fill="#c9a227" stroke="#7d6418" stroke-width="2"/>
+    <circle cx="122" cy="126" r="17" fill="#c9a227" stroke="#7d6418" stroke-width="2"/>
+    <circle cx="78" cy="82" r="4" fill="#7d6418"/><circle cx="122" cy="82" r="4" fill="#7d6418"/>
+    <circle cx="78" cy="126" r="4" fill="#7d6418"/><circle cx="122" cy="126" r="4" fill="#7d6418"/>
+</svg>

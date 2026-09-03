@@ -1,0 +1,22 @@
+# secrets — never commit
+.env
+.env.local
+.env.*.local
+
+# dependencies
+node_modules/
+
+# runtime state (regenerated per session)
+data/audit.log.jsonl
+data/mandate.state.json
+
+# third-party agent tooling installed locally
+.agents/
+.claude/skills/
+skills-lock.json
+
+# os / editor
+.DS_Store
+*.log
+.vscode/
+.idea/

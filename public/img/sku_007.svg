@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Beige Nehru Jacket">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#f7f4ef"/><stop offset="1" stop-color="#e8e2d8"/></linearGradient></defs>
+  <rect width="200" height="200" fill="url(#bg)"/>
+  <ellipse cx="100" cy="180" rx="52" ry="7" fill="#000" opacity=".07"/>
+  
+    <path d="M62 46 L84 34 L100 44 L116 34 L138 46 L152 64 L138 78 L132 70 L132 170 Q100 178 68 170 L68 70 L62 78 L48 64 Z" fill="#cbb894"/>
+    <path d="M84 34 L100 60 L116 34" fill="none" stroke="#7e725c" stroke-width="3"/>
+    <path d="M100 60 L100 170" stroke="#7e725c" stroke-width="2" opacity=".6"/>
+    <path d="M68 70 L68 170 M132 70 L132 170" stroke="#7e725c" stroke-width="1" opacity=".35"/>
+    <circle cx="100" cy="84" r="2.6" fill="#7e725c"/><circle cx="100" cy="106" r="2.6" fill="#7e725c"/><circle cx="100" cy="128" r="2.6" fill="#7e725c"/>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Banarasi Silk Dupatta">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#f7f4ef"/><stop offset="1" stop-color="#e8e2d8"/></linearGradient></defs>
+  <rect width="200" height="200" fill="url(#bg)"/>
+  <ellipse cx="100" cy="180" rx="52" ry="7" fill="#000" opacity=".07"/>
+  
+    <path d="M42 58 Q70 42 100 58 Q130 74 158 58 L158 132 Q130 148 100 132 Q70 116 42 132 Z" fill="#c9a227"/>
+    <path d="M42 76 Q70 60 100 76 Q130 92 158 76" fill="none" stroke="#7d6418" stroke-width="2" opacity=".5"/>
+    <path d="M42 112 Q70 96 100 112 Q130 128 158 112" fill="none" stroke="#7d6418" stroke-width="2" opacity=".5"/>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Velvet Mojari">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#f7f4ef"/><stop offset="1" stop-color="#e8e2d8"/></linearGradient></defs>
+  <rect width="200" height="200" fill="url(#bg)"/>
+  <ellipse cx="100" cy="180" rx="52" ry="7" fill="#000" opacity=".07"/>
+  
+    <path d="M46 128 Q46 96 74 90 Q100 86 124 94 Q152 104 154 126 Q154 138 140 138 L58 138 Q46 138 46 128 Z" fill="#7d2233"/>
+    <path d="M46 130 L154 130" stroke="#4e1520" stroke-width="4"/>
+    <path d="M74 92 Q100 112 126 96" fill="none" stroke="#4e1520" stroke-width="2.5" opacity=".7"/>
+</svg>

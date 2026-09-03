@@ -1,0 +1,22 @@
+{
+  "name": "agent-commerce-rail",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A policy-gated agentic commerce rail on Razorpay test mode. Razorpay AI Buildathon - Track 01.",
+  "scripts": {
+    "smoke": "node scripts/smoke-razorpay.mjs",
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "smoke:llm": "node scripts/smoke-llm.mjs",
+    "smoke:voice": "node scripts/smoke-voice.mjs",
+    "mcp": "node src/mcp-server.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.70.0",
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "dotenv": "^17.0.0",
+    "express": "^5.0.0",
+    "zod": "^4.5.4"
+  }
+}

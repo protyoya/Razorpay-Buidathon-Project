@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="White Cotton Kurta">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#f7f4ef"/><stop offset="1" stop-color="#e8e2d8"/></linearGradient></defs>
+  <rect width="200" height="200" fill="url(#bg)"/>
+  <ellipse cx="100" cy="180" rx="52" ry="7" fill="#000" opacity=".07"/>
+  
+    <path d="M64 46 L84 36 Q100 48 116 36 L136 46 L150 62 L136 76 L130 68 L130 168 Q100 176 70 168 L70 68 L64 76 L50 62 Z" fill="#f2f0ea"/>
+    <path d="M100 48 L100 168" stroke="#969591" stroke-width="1.5" opacity=".55"/>
+    <path d="M84 36 Q100 60 116 36" fill="none" stroke="#969591" stroke-width="2.5"/>
+    <circle cx="100" cy="74" r="2.4" fill="#969591"/><circle cx="100" cy="92" r="2.4" fill="#969591"/>
+</svg>

@@ -1,0 +1,434 @@
+{
+  "merchant": {
+    "name": "Kurta Company",
+    "id": "mrch_kurtaco",
+    "currency": "INR"
+  },
+  "products": [
+    {
+      "id": "sku_001",
+      "name": "Indigo Cotton Kurta",
+      "category": "apparel",
+      "price_inr": 1299,
+      "color": "blue",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "stock": 12,
+      "tags": [
+        "kurta",
+        "cotton",
+        "casual"
+      ],
+      "image": "/img/sku_001.svg",
+      "pairs_with": [
+        "sku_009",
+        "sku_016",
+        "sku_018"
+      ],
+      "upgrade_to": "sku_003"
+    },
+    {
+      "id": "sku_002",
+      "name": "Sky Blue Linen Kurta",
+      "category": "apparel",
+      "price_inr": 1499,
+      "color": "blue",
+      "sizes": [
+        "M",
+        "L",
+        "XL"
+      ],
+      "stock": 7,
+      "tags": [
+        "kurta",
+        "linen",
+        "summer"
+      ],
+      "image": "/img/sku_002.svg",
+      "pairs_with": [
+        "sku_010",
+        "sku_016",
+        "sku_007"
+      ],
+      "upgrade_to": "sku_003"
+    },
+    {
+      "id": "sku_003",
+      "name": "Navy Chikankari Kurta",
+      "category": "apparel",
+      "price_inr": 2450,
+      "color": "blue",
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
+      "stock": 4,
+      "tags": [
+        "kurta",
+        "chikankari",
+        "festive"
+      ],
+      "image": "/img/sku_003.svg",
+      "pairs_with": [
+        "sku_009",
+        "sku_017",
+        "sku_014"
+      ],
+      "upgrade_to": "sku_005"
+    },
+    {
+      "id": "sku_004",
+      "name": "White Cotton Kurta",
+      "category": "apparel",
+      "price_inr": 999,
+      "color": "white",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "stock": 20,
+      "tags": [
+        "kurta",
+        "cotton",
+        "daily"
+      ],
+      "image": "/img/sku_004.svg",
+      "pairs_with": [
+        "sku_009",
+        "sku_007",
+        "sku_016"
+      ],
+      "upgrade_to": "sku_001"
+    },
+    {
+      "id": "sku_005",
+      "name": "Black Silk Kurta",
+      "category": "apparel",
+      "price_inr": 3200,
+      "color": "black",
+      "sizes": [
+        "M",
+        "L"
+      ],
+      "stock": 3,
+      "tags": [
+        "kurta",
+        "silk",
+        "party"
+      ],
+      "image": "/img/sku_005.svg",
+      "pairs_with": [
+        "sku_010",
+        "sku_017",
+        "sku_018"
+      ]
+    },
+    {
+      "id": "sku_006",
+      "name": "Maroon Silk Sherwani",
+      "category": "apparel",
+      "price_inr": 8499,
+      "color": "maroon",
+      "sizes": [
+        "M",
+        "L",
+        "XL"
+      ],
+      "stock": 2,
+      "tags": [
+        "sherwani",
+        "silk",
+        "wedding"
+      ],
+      "image": "/img/sku_006.svg",
+      "pairs_with": [
+        "sku_017",
+        "sku_014",
+        "sku_018"
+      ]
+    },
+    {
+      "id": "sku_007",
+      "name": "Beige Nehru Jacket",
+      "category": "apparel",
+      "price_inr": 2199,
+      "color": "beige",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "stock": 9,
+      "tags": [
+        "jacket",
+        "nehru",
+        "layering"
+      ],
+      "image": "/img/sku_007.svg",
+      "pairs_with": [
+        "sku_004",
+        "sku_009",
+        "sku_016"
+      ],
+      "upgrade_to": "sku_011"
+    },
+    {
+      "id": "sku_008",
+      "name": "Olive Cotton Pathani",
+      "category": "apparel",
+      "price_inr": 1650,
+      "color": "olive",
+      "sizes": [
+        "M",
+        "L",
+        "XL"
+      ],
+      "stock": 6,
+      "tags": [
+        "pathani",
+        "cotton"
+      ],
+      "image": "/img/sku_008.svg",
+      "pairs_with": [
+        "sku_016",
+        "sku_015"
+      ]
+    },
+    {
+      "id": "sku_009",
+      "name": "Cream Churidar Pyjama",
+      "category": "apparel",
+      "price_inr": 749,
+      "color": "cream",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "stock": 25,
+      "tags": [
+        "bottom",
+        "churidar"
+      ],
+      "image": "/img/sku_009.svg",
+      "pairs_with": [
+        "sku_001",
+        "sku_004"
+      ],
+      "upgrade_to": "sku_010"
+    },
+    {
+      "id": "sku_010",
+      "name": "White Cotton Pyjama",
+      "category": "apparel",
+      "price_inr": 599,
+      "color": "white",
+      "sizes": [
+        "M",
+        "L",
+        "XL"
+      ],
+      "stock": 30,
+      "tags": [
+        "bottom",
+        "pyjama"
+      ],
+      "image": "/img/sku_010.svg",
+      "pairs_with": [
+        "sku_002",
+        "sku_005"
+      ]
+    },
+    {
+      "id": "sku_011",
+      "name": "Teal Bandhgala Blazer",
+      "category": "apparel",
+      "price_inr": 6999,
+      "color": "teal",
+      "sizes": [
+        "M",
+        "L"
+      ],
+      "stock": 2,
+      "tags": [
+        "blazer",
+        "bandhgala",
+        "formal"
+      ],
+      "image": "/img/sku_011.svg",
+      "pairs_with": [
+        "sku_010",
+        "sku_017"
+      ]
+    },
+    {
+      "id": "sku_012",
+      "name": "Grey Kurta Set (Kurta + Pyjama)",
+      "category": "apparel",
+      "price_inr": 1899,
+      "color": "grey",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "stock": 11,
+      "tags": [
+        "set",
+        "kurta",
+        "value"
+      ],
+      "image": "/img/sku_012.svg",
+      "pairs_with": [
+        "sku_016",
+        "sku_015",
+        "sku_018"
+      ],
+      "upgrade_to": "sku_003"
+    },
+    {
+      "id": "sku_013",
+      "name": "Mustard Printed Kurta",
+      "category": "apparel",
+      "price_inr": 1150,
+      "color": "yellow",
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
+      "stock": 8,
+      "tags": [
+        "kurta",
+        "printed"
+      ],
+      "image": "/img/sku_013.svg",
+      "pairs_with": [
+        "sku_009",
+        "sku_015",
+        "sku_016"
+      ],
+      "upgrade_to": "sku_003"
+    },
+    {
+      "id": "sku_014",
+      "name": "Banarasi Silk Dupatta",
+      "category": "accessories",
+      "price_inr": 2750,
+      "color": "gold",
+      "sizes": [
+        "free"
+      ],
+      "stock": 5,
+      "tags": [
+        "dupatta",
+        "banarasi",
+        "festive"
+      ],
+      "image": "/img/sku_014.svg",
+      "pairs_with": [
+        "sku_003",
+        "sku_006"
+      ]
+    },
+    {
+      "id": "sku_015",
+      "name": "Handloom Cotton Stole",
+      "category": "accessories",
+      "price_inr": 899,
+      "color": "rust",
+      "sizes": [
+        "free"
+      ],
+      "stock": 14,
+      "tags": [
+        "stole",
+        "handloom"
+      ],
+      "image": "/img/sku_015.svg",
+      "pairs_with": [
+        "sku_004",
+        "sku_013"
+      ],
+      "upgrade_to": "sku_014"
+    },
+    {
+      "id": "sku_016",
+      "name": "Kolhapuri Leather Chappal",
+      "category": "footwear",
+      "price_inr": 1499,
+      "color": "tan",
+      "sizes": [
+        "7",
+        "8",
+        "9",
+        "10"
+      ],
+      "stock": 10,
+      "tags": [
+        "chappal",
+        "kolhapuri",
+        "leather"
+      ],
+      "image": "/img/sku_016.svg",
+      "pairs_with": [
+        "sku_001",
+        "sku_012"
+      ],
+      "upgrade_to": "sku_017"
+    },
+    {
+      "id": "sku_017",
+      "name": "Velvet Mojari",
+      "category": "footwear",
+      "price_inr": 2299,
+      "color": "maroon",
+      "sizes": [
+        "8",
+        "9",
+        "10"
+      ],
+      "stock": 4,
+      "tags": [
+        "mojari",
+        "velvet",
+        "wedding"
+      ],
+      "image": "/img/sku_017.svg",
+      "pairs_with": [
+        "sku_006",
+        "sku_005"
+      ]
+    },
+    {
+      "id": "sku_018",
+      "name": "Brass Kurta Button Set",
+      "category": "accessories",
+      "price_inr": 449,
+      "color": "gold",
+      "sizes": [
+        "free"
+      ],
+      "stock": 40,
+      "tags": [
+        "buttons",
+        "brass"
+      ],
+      "image": "/img/sku_018.svg",
+      "pairs_with": [
+        "sku_001",
+        "sku_005"
+      ]
+    }
+  ]
+}
