@@ -114,11 +114,6 @@ async function openCheckout(btn, totalInr) {
     const r = await fetch("/api/create-order", { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" });
     order = await r.json();
     if (!r.ok) {
-      if (order.error === "payment_failed") {
-        // Kaira apologises over SSE; the button just offers the retry.
-        note(`❌ ${order.message}`);
-        return reset("Try again");
-      }
       note(order.reasons?.[0] ? `🛡️ ${order.reasons[0]}` : `⚠️ ${order.message || "Could not start checkout"}`);
       return reset(`Pay ₹${totalInr.toLocaleString("en-IN")}`);
     }
@@ -638,9 +633,6 @@ async function hydrateTrail() {
   if (!v?.entries?.length || trail.children.length) return;
   for (const e of v.entries) entry(e);
 }
-$("fail-toggle").onchange = (e) =>
-  fetch("/api/demo/failure", { method: "POST", headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ enabled: e.target.checked }) });
 $("reset").onclick = async () => { await fetch("/api/reset", { method: "POST" });
   chat.innerHTML = ""; trail.innerHTML = ""; refreshMandate(); greet(); };
 

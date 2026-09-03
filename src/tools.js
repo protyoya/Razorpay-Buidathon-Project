@@ -11,7 +11,7 @@ const byId = new Map(catalog.products.map((p) => [p.id, p]));
 
 /** Per-conversation state. One session per browser tab is plenty for a demo. */
 export function newSession() {
-  return { cart: [], pendingApproval: null, approvalToken: null, lastLink: null, pendingCheckout: null, retryCount: 0, failureShown: false };
+  return { cart: [], pendingApproval: null, approvalToken: null, lastLink: null, pendingCheckout: null };
 }
 const cartItems = (s) => s.cart.map((c) => ({ ...byId.get(c.product_id), qty: c.qty, size: c.size }));
 
@@ -319,18 +319,6 @@ const handlers = {
   async check_payment_status(_input, s) {
     if (!s.lastLink) return { ok: false, error_code: "NO_LINK", message: "No payment link has been created yet." };
 
-    // Demo switch: forces the graceful-failure path without needing a real decline.
-    if (config.demo.forcePaymentFailure && s.retryCount === 0) {
-      s.retryCount++;
-      record({ actor: "razorpay", action: "check_payment_status",
-        summary: `Payment for ₹${s.lastLink.total_inr} FAILED — the issuing bank declined the card.`,
-        decision: "deny", reasons: ["Razorpay returned BAD_REQUEST_ERROR: payment failed at the issuing bank."],
-        detail: { payment_link_id: s.lastLink.id, simulated: true } });
-      return { ok: false, status: "failed", error_code: "BAD_REQUEST_ERROR",
-               message: "Payment failed — the issuing bank declined the card.",
-               guidance: "Apologise once, say the bank declined it, and offer to send a fresh link or pick something cheaper. Never claim it succeeded." };
-    }
-
     const link = await rzp.getPaymentLink(s.lastLink.id);
     const paid = link.status === "paid";
     record({ actor: "razorpay", action: "check_payment_status",
@@ -340,7 +328,7 @@ const handlers = {
 
     if (paid) {
       commitSpend({ totalInr: s.lastLink.total_inr, approvalToken: s.approvalToken });
-      s.cart = []; s.approvalToken = null; s.retryCount = 0;
+      s.cart = []; s.approvalToken = null;
     }
     return { ok: true, status: link.status, paid, amount_paid_inr: rzp.paiseToRupees(link.amount_paid),
              remaining_budget_inr: mandate.cycle_cap_inr - mandate.spent_this_cycle_inr };

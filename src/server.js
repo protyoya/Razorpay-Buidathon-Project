@@ -157,22 +157,6 @@ app.post("/api/create-order", async (req, res) => {
       return res.status(403).json({ error: "policy_blocked", decision: verdict.decision, reasons: verdict.reasons });
     }
 
-    // Demo switch: fail the first attempt so the graceful-failure path can be
-    // shown on the checkout flow, not just the payment-link one.
-    if (config.demo.forcePaymentFailure && !session.failureShown) {
-      session.failureShown = true;
-      record({ actor: "razorpay", action: "create_order",
-        summary: `Payment for ₹${totalInr} FAILED — the issuing bank declined the card.`,
-        decision: "deny",
-        reasons: ["Razorpay returned BAD_REQUEST_ERROR: the payment could not be completed."],
-        detail: { total_inr: totalInr, simulated: true } });
-      res.status(502).json({ error: "payment_failed", code: "BAD_REQUEST_ERROR",
-        message: "The bank declined that card." });
-      return void safeTurn(
-        "[The payment failed — the issuing bank declined the card. Apologise once, briefly, say what happened in human terms, and offer to try again. Do not claim it succeeded.]",
-        "Sorry — the bank declined that card. Shall I try again?");
-    }
-
     const order = await createOrder({
       amountPaise,
       receipt: `chk_${Date.now()}`,
@@ -226,7 +210,7 @@ app.post("/api/verify-payment", async (req, res) => {
   if (!valid) return res.status(400).json({ verified: false, error: "signature_mismatch" });
 
   commitSpend({ totalInr: pending.totalInr, approvalToken: session.approvalToken });
-  session.cart = []; session.approvalToken = null; session.pendingCheckout = null; session.retryCount = 0;
+  session.cart = []; session.approvalToken = null; session.pendingCheckout = null;
 
   emit("cart_updated", cartSnapshot(session));
   res.json({ verified: true, payment_id: razorpay_payment_id, amount_inr: pending.totalInr });
@@ -443,16 +427,8 @@ app.get("/api/catalog", (_q, res) => res.json({ products: catalog.products, merc
 app.get("/api/mandate", (_q, res) => res.json(mandate));
 app.get("/api/cart", (_q, res) => res.json({ ...cartSnapshot(session), pendingApproval: session.pendingApproval }));
 
-app.post("/api/demo/failure", (req, res) => {
-  config.demo.forcePaymentFailure = !!req.body.enabled;
-  record({ actor: "user", action: "demo_toggle",
-    summary: `Payment-failure simulation turned ${config.demo.forcePaymentFailure ? "ON" : "OFF"}.` });
-  res.json({ forcePaymentFailure: config.demo.forcePaymentFailure });
-});
-
 app.post("/api/reset", (_q, res) => {
   session = { ...newSession(), messages: [] };
-  config.demo.forcePaymentFailure = false;
   reset(); res.json({ ok: true });
 });
 

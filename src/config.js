@@ -65,7 +65,6 @@ export const config = {
     preferBrowserStt: process.env.VOICE_PREFER_BROWSER_STT !== "false",
     speed: Number(process.env.FISH_AUDIO_SPEED || 1),
   },
-  demo: { forcePaymentFailure: process.env.DEMO_FORCE_PAYMENT_FAILURE === "true" },
 };
 
 /**
