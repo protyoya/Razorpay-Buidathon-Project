@@ -61,7 +61,7 @@ es.addEventListener("payment_link", (m) => {
   const { url, total_inr, id } = JSON.parse(m.data);
   const d = document.createElement("div");
   d.className = "paylink";
-  d.innerHTML = `<b>Razorpay payment link</b><br><span style="color:#8696a0;font-size:12px">
+  d.innerHTML = `<b>Razorpay payment link</b><br><span class="sec" style="display:block;text-align:left">
     ₹${total_inr.toLocaleString("en-IN")} · ${id} · test mode</span>
     <a href="${url}" target="_blank" rel="noopener">Pay ₹${total_inr.toLocaleString("en-IN")} →</a>`;
   chat.appendChild(d); scroll(chat);
@@ -174,7 +174,7 @@ es.addEventListener("approval_required", (m) => {
   const p = JSON.parse(m.data);
   const box = $("approval");
   box.innerHTML = `<h4>Approval required</h4>
-    <p>${esc(p.reason)}<br><b style="color:#e9edef">Total ₹${p.total_inr.toLocaleString("en-IN")}</b>
+    <p>${esc(p.reason)}<br><b>Total ₹${p.total_inr.toLocaleString("en-IN")}</b>
     — ${p.items.map((i) => `${i.qty}× ${esc(i.name)}`).join(", ")}</p>
     <div class="row"><button class="yes">Approve ₹${p.total_inr.toLocaleString("en-IN")}</button>
     <button class="no">Decline</button></div>`;
