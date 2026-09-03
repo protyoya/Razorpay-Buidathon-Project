@@ -32,6 +32,25 @@ decision is written to a hash-chained log with the reasoning in plain English.
 
 ---
 
+## Track 01 — where each requirement lives
+
+**The bar**
+
+| Requirement | Where |
+|---|---|
+| Every money action **explainable** | `policy.js` returns plain-English reasons; the agent relays them verbatim and they appear in the audit trail |
+| **Bounded** | Hard ceiling ₹10,000/order, ₹15,000/month, category allow-list, 3 orders/hour — enforced in code, not prompt |
+| **Gated** | Above ₹2,000 the agent stops; a single-use token bound to one exact cart *and* total unlocks payment |
+| **Visible audit trail** | SHA-256 hash chain, tamper-evident, `GET /api/audit` and the in-app drawer |
+| **One failure handled gracefully** | Simulated decline → apology, human explanation, retry offered. Never claims false success |
+
+**Both halves of the brief**
+
+| | |
+|---|---|
+| *Grow the merchant's revenue* | Conversational checkout + a cross-sell/upsell agent grounded in real catalogue data |
+| *Make them sellable to AI buyers* | An MCP server and a `/.well-known/agent-manifest.json` — an outside agent can discover, browse and pay, under the same mandate |
+
 ## Run it
 
 ```bash
@@ -164,16 +183,22 @@ retried with backoff; 4xx is surfaced immediately as a structured tool error.
 
 ---
 
-## The four demo moments
+## The demo, in six moments
 
 1. **Auto-approved** — *"get me a blue kurta under ₹1500"* → ₹1,299, under the ceiling.
-   Agent transacts alone and says *why* it could. Real payment link, paid with a test card.
-2. **Gated** — *"add the maroon sherwani too"* → ₹9,798. Agent **stops**, names the limit it
-   crossed, and approval buttons appear. Nothing is charged until they're tapped.
-3. **Denied** — *"also grab me a MacBook"* → category outside the mandate. No workaround
+   The agent transacts alone and says *why* it could. A Pay button appears in the chat and
+   opens Razorpay's checkout inline; pay it with `4111 1111 1111 1111`.
+2. **Sold up** — it offers what goes with the kurta from real stock, in one line. Accept one
+   and the total climbs past ₹2,000.
+3. **Gated** — the agent **stops**, names the limit it crossed, and approval buttons appear.
+   Nothing is charged until they are tapped, and editing the cart afterwards voids the
+   approval and cancels the link.
+4. **Denied** — *"also grab me a MacBook"* → category outside the mandate. No workaround is
    attempted; a genuine alternative is offered instead.
-4. **Failed gracefully** — flip *Simulate payment failure* → the payment declines. The agent
-   apologises once, says the bank declined it, and offers a fresh link. It never claims success.
+5. **Failed gracefully** — tick *Simulate payment failure* → the payment declines. The agent
+   apologises once, says the bank declined it, and offers to retry. It never claims success.
+6. **A second buyer** — drive the same purchase from Claude Desktop over MCP and watch the
+   identical policy stop it. Two buyers, one merchant, one audit trail.
 
 ---
 
