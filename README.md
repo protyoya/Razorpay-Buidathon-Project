@@ -42,7 +42,7 @@ decision is written to a hash-chained log with the reasoning in plain English.
 | **Bounded** | Hard ceiling ₹10,000/order, ₹15,000/month, category allow-list, 3 orders/hour — enforced in code, not prompt |
 | **Gated** | Above ₹2,000 the agent stops; a single-use token bound to one exact cart *and* total unlocks payment |
 | **Visible audit trail** | SHA-256 hash chain, tamper-evident, `GET /api/audit` and the in-app drawer |
-| **One failure handled gracefully** | Simulated decline → apology, human explanation, retry offered. Never claims false success |
+| **One failure handled gracefully** | A real Razorpay decline (`failure@razorpay`) → `payment.failed` → apology, human explanation, retry offered. Never claims false success |
 
 **Both halves of the brief**
 
@@ -195,8 +195,9 @@ retried with backoff; 4xx is surfaced immediately as a structured tool error.
    approval and cancels the link.
 4. **Denied** — *"also grab me a MacBook"* → category outside the mandate. No workaround is
    attempted; a genuine alternative is offered instead.
-5. **Failed gracefully** — tick *Simulate payment failure* → the payment declines. The agent
-   apologises once, says the bank declined it, and offers to retry. It never claims success.
+5. **Failed gracefully** — pay with the UPI id `failure@razorpay`, which Razorpay declines
+   for real. `payment.failed` reaches the agent, which apologises once, says the bank
+   declined it, and offers to retry. It never claims a success that did not happen.
 6. **A second buyer** — drive the same purchase from Claude Desktop over MCP and watch the
    identical policy stop it. Two buyers, one merchant, one audit trail.
 
