@@ -671,4 +671,25 @@ $("reset").onclick = async () => { await fetch("/api/reset", { method: "POST" })
   chat.innerHTML = ""; trail.innerHTML = ""; refreshMandate(); greet(); };
 
 function greet() { bubble("Hi! I'm Kaira from Kurta Company 👋\n\nTell me what you're looking for and I'll sort out the payment right here.", "in"); }
-hydrateTrail(); greet(); initVoice();
+/**
+ * Dismiss the preloader once the app is genuinely ready — fonts settled and the
+ * first data in — but hold it long enough that it reads rather than flashes.
+ * Clicking skips it, which matters when re-shooting a take.
+ */
+function dismissPreloader() {
+  const el = $("preload");
+  if (!el || el.classList.contains("done")) return;
+  el.classList.add("done");
+  setTimeout(() => el.remove(), 800);
+}
+(async () => {
+  const MIN_MS = 1700;
+  const started = performance.now();
+  $("preload")?.addEventListener("click", dismissPreloader);
+  try { await Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 2500))]); } catch {}
+  await hydrateTrail();
+  const left = MIN_MS - (performance.now() - started);
+  setTimeout(dismissPreloader, Math.max(0, left));
+})();
+
+greet(); initVoice();

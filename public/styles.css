@@ -450,3 +450,62 @@ body::before{
   .tick circle,.tick path{animation:none;stroke-dashoffset:0}
   .thanks,.thanks-card{animation:none}
 }
+
+/* ── preloader ──────────────────────────────────────────────────────────────
+   Holds the pitch line for a moment, then clears. The blur lifts rather than
+   fades, so the app resolves into focus behind the words.                    */
+.preload{
+  position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:var(--s5);
+  background:#FBF7F2CC;
+  backdrop-filter:blur(30px) saturate(180%);
+  -webkit-backdrop-filter:blur(30px) saturate(180%);
+  cursor:pointer;
+  transition:opacity .7s var(--ease), backdrop-filter .7s var(--ease),
+             -webkit-backdrop-filter .7s var(--ease);
+}
+.preload.done{
+  opacity:0;pointer-events:none;
+  backdrop-filter:blur(0px) saturate(100%);
+  -webkit-backdrop-filter:blur(0px) saturate(100%);
+}
+.pl-inner{display:flex;flex-direction:column;align-items:center;gap:var(--s3);text-align:center}
+
+.pl-name{
+  font-family:var(--font-display);font-weight:400;
+  font-size:clamp(56px,11vw,104px);line-height:1;letter-spacing:-.015em;
+  color:var(--ink);padding-block:4px;
+  background:linear-gradient(96deg,var(--orange) 0%,#E0793A 34%,var(--peri) 78%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:pl-name .9s var(--ease) both;
+}
+@keyframes pl-name{from{opacity:0;transform:translateY(16px);filter:blur(10px)}}
+
+.pl-line{
+  display:flex;flex-direction:column;gap:2px;
+  font-size:clamp(14px,2.4vw,17px);line-height:1.55;color:var(--ink-mid);max-width:34ch;
+}
+.pl-line span{animation:pl-line .8s var(--ease) both}
+.pl-line span:nth-child(1){animation-delay:.26s}
+.pl-line span:nth-child(2){animation-delay:.4s}
+.pl-line em{font-style:normal;color:var(--orange);font-weight:500}
+@keyframes pl-line{from{opacity:0;transform:translateY(9px);filter:blur(5px)}}
+
+.pl-bar{
+  width:104px;height:2px;border-radius:2px;overflow:hidden;margin-top:var(--s3);
+  background:#16162b14;animation:pl-line .6s var(--ease) both .55s;
+}
+.pl-bar i{
+  display:block;height:100%;width:40%;border-radius:2px;
+  background:linear-gradient(90deg,var(--orange),var(--peri));
+  animation:pl-sweep 1.15s var(--ease) infinite;
+}
+@keyframes pl-sweep{
+  0%{transform:translateX(-110%)}
+  100%{transform:translateX(290%)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .pl-name,.pl-line span,.pl-bar{animation:none}
+  .pl-bar i{animation:none;width:100%}
+  .preload{transition:opacity .3s linear}
+}
