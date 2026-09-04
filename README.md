@@ -71,12 +71,17 @@ The mandate is not a line in a prompt. It is code the model cannot argue with.
 
 ## Run it
 
+Needs **Node 20 or newer**.
+
 ```bash
 npm install
 cp .env.example .env          # add your keys
 npm run smoke                 # 1. proves the Razorpay key works
 npm run smoke:llm             # 2. proves the model provider works
 npm run dev                   # http://localhost:4123
+
+npm run mcp                   # optional: expose the shop to other AI agents
+npm run smoke:voice           # optional: checks the voice providers
 ```
 
 Run both preflights before anything else — each probes one half of the stack and names the exact field that failed rather than returning a bare `400`.
