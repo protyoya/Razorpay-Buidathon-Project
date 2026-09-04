@@ -55,7 +55,7 @@ The mandate is not a line in a prompt. It is code the model cannot argue with.
 <sub>**Explore shop.** The full catalogue behind a glass overlay, for browsing outside the conversation.</sub>
 
 ![Voice mode with a reactive orb](docs/screenshots/06-voice-mode.png)
-<sub>**Voice mode.** Hold-free turn taking with a live transcript. The orb is driven by real audio — your microphone while you speak, the synthesised reply while Kaira does.</sub>
+<sub>**Voice mode.** Hands-free turn taking with a live transcript. The orb is driven by real audio — your microphone while you speak, the synthesised reply while Kaira does.</sub>
 
 ---
 
@@ -121,6 +121,32 @@ MCP client (Claude Desktop) ──▶ mcp-server.js ──▶ /api/agent/tools/*
 **The money path does not depend on the model.** Once a human approves, the checkout is created server-side. A rate-limited or failed model turn cannot strand a customer who has already said yes.
 
 ---
+
+## Talking to it
+
+Tap the waveform button and the conversation goes hands-free: speak, and Kaira answers out loud. It records until it hears about a second of silence, sends, speaks the reply, then reopens the mic on its own.
+
+Both directions run on a free tier, chosen per direction rather than per vendor:
+
+| | Runs on | Why this one |
+|---|---|---|
+| **Speech → text** | The browser's own Web Speech API | Free, no upload, and it streams **interim text** so the caption fills in as you speak |
+| **Text → speech** | **Fish Audio** `s2.1-pro-free` | Genuinely free under fair use, with a warm Indian-English voice |
+| Fallback speech → text | Deepgram `nova-3` | For Safari and Firefox, which have no Web Speech API |
+
+Fish Audio's own ASR is wired up but not the default: its speech-to-text bills against a separate API-credit balance the free tier doesn't include, while its TTS runs free. Splitting the two is what makes voice cost nothing to run.
+
+**The transcript lands in the input box before anything is sent.** That matters more here than in an ordinary voice assistant — this agent spends money on what it hears, so a misheard order has to be visible while it is still a sentence and not yet a purchase. Every spoken turn is also written to the audit trail as a `voice_input` entry, so a voice order is exactly as reviewable as a typed one.
+
+Voice changes how the shopper talks. It changes nothing about what the agent may do: a spoken request passes through the same spend mandate as a typed one.
+
+### The orb
+
+`public/blob.js` is a dependency-free canvas renderer. Its radius, surface motion and rim brightness are driven by a live audio level read through a Web Audio `AnalyserNode` — **your microphone while you speak, the synthesised reply while Kaira does** — so one object animates both halves of the conversation. It shifts palette between listening, thinking and speaking.
+
+Synthesis takes a few seconds for a long reply, which would be dead air, so `/api/voice/speak` is two steps: a `POST` starts synthesis and returns an id, and an `<audio>` element streams `GET /api/voice/speak/:id`. Playback begins on the first bytes rather than the last — **audio starts in about 0.3s regardless of how long the reply is.**
+
+Set `FISH_AUDIO_API_KEY` to enable replies; without it the mic still works and the orb still reacts, because none of that needs a server.
 
 ## Transactable by an outside AI buyer
 
