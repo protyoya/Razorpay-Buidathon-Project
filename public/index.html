@@ -8,6 +8,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head><body>
+<!-- ── preloader: the pitch line, then it gets out of the way ── -->
+<div id="preload" class="preload">
+  <div class="pl-inner">
+    <h1 class="pl-name">Kaira</h1>
+    <p class="pl-line">
+      <span>A conversational checkout agent</span>
+      <span>that can spend your money <em>— safely.</em></span>
+    </p>
+    <div class="pl-bar"><i></i></div>
+  </div>
+</div>
+
 <div class="stage">
 
   <!-- ── chat ───────────────────────────────────────────── -->
@@ -104,6 +116,22 @@
     <div class="bar"><span>Left this month</span><b id="m-left"></b></div>
   </div>
 </aside>
+
+<!-- ── order confirmed ─────────────────────────────────────── -->
+<div id="thanks" class="thanks hidden" role="status" aria-live="polite">
+  <div class="thanks-card">
+    <svg class="tick" viewBox="0 0 52 52" aria-hidden="true">
+      <circle cx="26" cy="26" r="23"/>
+      <path d="M15 27l8 8 15-16"/>
+    </svg>
+    <h2>Thank you</h2>
+    <p class="t-sub">Your order is confirmed.</p>
+    <div class="t-amt" id="t-amount">₹0</div>
+    <p class="t-items" id="t-items"></p>
+    <p class="t-meta" id="t-meta"></p>
+    <p class="t-shop">Kurta Company</p>
+  </div>
+</div>
 
 <!-- ── explore shop overlay ────────────────────────────────── -->
 <div id="shop" class="shop hidden" role="dialog" aria-modal="true" aria-label="Shop">

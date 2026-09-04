@@ -550,6 +550,40 @@ $("composer").onsubmit = (e) => {
   else openVoice();                            // empty box -> hands-free mode
 };
 
+/**
+ * Order confirmed. Voice mode ends itself — the conversation is over, and
+ * leaving a live microphone open after someone has paid is the wrong default.
+ * The card holds for a few seconds, then clears itself.
+ */
+let thanksTimer = null;
+es.addEventListener("order_confirmed", (m) => {
+  const o = JSON.parse(m.data);
+  settle();
+  stopSpeaking();
+  // Unconditional: once an order is paid the microphone goes off, whatever
+  // state the session thinks it is in. A live mic after checkout is never right.
+  vActive = false;
+  stopListening();
+  cancelAnimationFrame(meterRaf); meterRaf = null;
+  blob?.stop();
+  $("voicedock").classList.add("hidden");
+  $("tiles").innerHTML = "";
+  $("shop").classList.add("hidden");
+  $("approval").classList.add("hidden");
+
+  $("t-amount").textContent = inr(o.amount_inr);
+  $("t-items").textContent = (o.items ?? []).map((i) => `${i.qty} × ${i.name}`).join(" · ");
+  $("t-meta").textContent = o.payment_id ? `${o.payment_id} · Razorpay test mode` : "Razorpay test mode";
+
+  const box = $("thanks");
+  clearTimeout(thanksTimer);
+  box.classList.remove("hidden", "out");
+  thanksTimer = setTimeout(() => {
+    box.classList.add("out");
+    setTimeout(() => box.classList.add("hidden"), 560);
+  }, 5200);
+});
+
 // ---- audit drawer: collapsed by default, opened on demand ----
 const drawer = $("auditdrawer"), atoggle = $("audit-toggle");
 function setDrawer(open) {
@@ -637,4 +671,25 @@ $("reset").onclick = async () => { await fetch("/api/reset", { method: "POST" })
   chat.innerHTML = ""; trail.innerHTML = ""; refreshMandate(); greet(); };
 
 function greet() { bubble("Hi! I'm Kaira from Kurta Company 👋\n\nTell me what you're looking for and I'll sort out the payment right here.", "in"); }
-hydrateTrail(); greet(); initVoice();
+/**
+ * Dismiss the preloader once the app is genuinely ready — fonts settled and the
+ * first data in — but hold it long enough that it reads rather than flashes.
+ * Clicking skips it, which matters when re-shooting a take.
+ */
+function dismissPreloader() {
+  const el = $("preload");
+  if (!el || el.classList.contains("done")) return;
+  el.classList.add("done");
+  setTimeout(() => el.remove(), 800);
+}
+(async () => {
+  const MIN_MS = 1700;
+  const started = performance.now();
+  $("preload")?.addEventListener("click", dismissPreloader);
+  try { await Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 2500))]); } catch {}
+  await hydrateTrail();
+  const left = MIN_MS - (performance.now() - started);
+  setTimeout(dismissPreloader, Math.max(0, left));
+})();
+
+greet(); initVoice();

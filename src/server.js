@@ -4,6 +4,7 @@ import { config, assertRazorpay, assertLlm } from "./config.js";
 import { runTurn } from "./agent.js";
 import { newSession, cartItems, cartTotal, cartSnapshot, catalog, toolDefs, execute } from "./tools.js";
 import { getTrail, subscribe, verifyChain, record, reset } from "./audit.js";
+import { activeProvider } from "./llm.js";
 
 import { transcribe, synthesize, voiceEnabled, providers } from "./voice.js";
 import { verifyPaymentLinkSignature, verifyCheckoutSignature, createOrder, rupeesToPaise, cancelPaymentLink } from "./razorpay.js";
@@ -163,7 +164,8 @@ app.post("/api/create-order", async (req, res) => {
       notes: { mandate_id: "mandate_demo_001", channel: "standard_checkout", items: items.map((i) => i.id).join(",") },
     });
 
-    session.pendingCheckout = { order_id: order.id, amountPaise, totalInr };
+    session.pendingCheckout = { order_id: order.id, amountPaise, totalInr,
+      items: items.map((i) => ({ name: i.name, qty: i.qty })) };
     record({ actor: "razorpay", action: "create_order",
       summary: `Created Razorpay order ${order.id} for ₹${totalInr} (in-chat checkout).`,
       decision: "allow", reasons: verdict.reasons,
@@ -213,6 +215,12 @@ app.post("/api/verify-payment", async (req, res) => {
   session.cart = []; session.approvalToken = null; session.pendingCheckout = null;
 
   emit("cart_updated", cartSnapshot(session));
+  emit("order_confirmed", {
+    payment_id: razorpay_payment_id,
+    amount_inr: pending.totalInr,
+    items: pending.items ?? [],
+    remaining_budget_inr: mandate.cycle_cap_inr - mandate.spent_this_cycle_inr,
+  });
   res.json({ verified: true, payment_id: razorpay_payment_id, amount_inr: pending.totalInr });
   await safeTurn(
     `[Payment of ₹${pending.totalInr} succeeded and was verified. Payment id ${razorpay_payment_id}. Confirm the order warmly in one short line.]`,
@@ -448,7 +456,12 @@ app.get("/payment/callback", (req, res) => {
 app.listen(config.port, () => {
   console.log(`\n  Kaira running on http://localhost:${config.port}`);
   console.log(`  Razorpay: ${config.razorpay.keyId} (TEST MODE)`);
-  console.log(`  LLM:      ${config.llm.model} via ${config.llm.provider}` +
-              (config.llm.groqKey ? ` (failover: Groq ${config.llm.groqModel})` : "") +
-              (config.llm.strictCompat ? " (strict-compat mode)" : ` @ effort=${config.llm.effort}`) + "\n");
+  // Report who is actually serving, not just who is configured as primary.
+  const who = activeProvider();
+  const line = who === "groq"
+    ? `${config.llm.groqModel} via Groq`
+    : `${config.llm.model} via ${config.llm.provider}` +
+      (config.llm.groqKey ? ` (failover: Groq ${config.llm.groqModel})` : "");
+  console.log(`  LLM:      ${line}` +
+              (config.llm.strictCompat ? " (strict-compat)" : ` @ effort=${config.llm.effort}`) + "\n");
 });

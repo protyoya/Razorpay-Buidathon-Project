@@ -28,7 +28,12 @@ async function rzp(method, path, body) {
   if (!res.ok) {
     console.error(`\n   HTTP ${res.status} on ${method} ${path}`);
     console.error("   " + JSON.stringify(json.error ?? json, null, 2).replace(/\n/g, "\n   "));
-    die("Razorpay rejected the call. Common causes: wrong secret, or Payment Links not enabled on this test account (Dashboard -> Payment Links -> activate).");
+    const d = String(json.error?.description ?? "");
+    if (/expired/i.test(d))
+      die("This test key has EXPIRED. Regenerate it: Razorpay Dashboard -> Test Mode -> Account & Settings -> API Keys -> Regenerate Test Key, then update RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in .env.");
+    if (res.status === 401)
+      die("Razorpay rejected the credentials. Check the secret matches the key id, and that both are from Test Mode.");
+    die("Razorpay rejected the call. If this was the Payment Links step, the feature may need activating: Dashboard -> Payment Links.");
   }
   return json;
 }
