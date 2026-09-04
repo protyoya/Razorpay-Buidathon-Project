@@ -164,7 +164,8 @@ app.post("/api/create-order", async (req, res) => {
       notes: { mandate_id: "mandate_demo_001", channel: "standard_checkout", items: items.map((i) => i.id).join(",") },
     });
 
-    session.pendingCheckout = { order_id: order.id, amountPaise, totalInr };
+    session.pendingCheckout = { order_id: order.id, amountPaise, totalInr,
+      items: items.map((i) => ({ name: i.name, qty: i.qty })) };
     record({ actor: "razorpay", action: "create_order",
       summary: `Created Razorpay order ${order.id} for ₹${totalInr} (in-chat checkout).`,
       decision: "allow", reasons: verdict.reasons,
@@ -214,6 +215,12 @@ app.post("/api/verify-payment", async (req, res) => {
   session.cart = []; session.approvalToken = null; session.pendingCheckout = null;
 
   emit("cart_updated", cartSnapshot(session));
+  emit("order_confirmed", {
+    payment_id: razorpay_payment_id,
+    amount_inr: pending.totalInr,
+    items: pending.items ?? [],
+    remaining_budget_inr: mandate.cycle_cap_inr - mandate.spent_this_cycle_inr,
+  });
   res.json({ verified: true, payment_id: razorpay_payment_id, amount_inr: pending.totalInr });
   await safeTurn(
     `[Payment of ₹${pending.totalInr} succeeded and was verified. Payment id ${razorpay_payment_id}. Confirm the order warmly in one short line.]`,

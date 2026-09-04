@@ -87,6 +87,11 @@ export async function runTurn({ session, userText, emit }) {
       if (["add_to_cart", "remove_from_cart", "check_payment_status"].includes(t.name)) {
         emit("cart_updated", cartSnapshot(session));
       }
+      if (t.name === "check_payment_status" && session.confirmed) {
+        emit("order_confirmed", { ...session.confirmed,
+          remaining_budget_inr: out.remaining_budget_inr });
+        session.confirmed = null;
+      }
       const { _ui, ...forModel } = out;          // keep UI-only data out of the prompt
       results.push({ type: "tool_result", tool_use_id: t.id, content: JSON.stringify(forModel), is_error: out.ok === false });
 

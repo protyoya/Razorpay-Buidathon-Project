@@ -327,6 +327,8 @@ const handlers = {
       decision: paid ? "allow" : null, detail: { payment_link_id: link.id, status: link.status, amount_paid: link.amount_paid } });
 
     if (paid) {
+      s.confirmed = { payment_id: link.id, amount_inr: s.lastLink.total_inr,
+                      items: cartItems(s).map((i) => ({ name: i.name, qty: i.qty })) };
       commitSpend({ totalInr: s.lastLink.total_inr, approvalToken: s.approvalToken });
       s.cart = []; s.approvalToken = null;
     }

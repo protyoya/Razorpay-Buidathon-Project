@@ -406,3 +406,47 @@ body::before{
 .addons .up{margin-top:var(--s3);padding-top:var(--s2);border-top:1px dashed var(--line);
   font-size:11.5px;color:var(--ink-mid);line-height:1.45}
 .addons .up b{color:var(--ink)}
+
+/* ── order confirmed ────────────────────────────────────────────────────── */
+.thanks{position:fixed;inset:0;z-index:70;display:grid;place-items:center;padding:var(--s5);
+  background:#16162b1f;backdrop-filter:blur(26px) saturate(170%);
+  -webkit-backdrop-filter:blur(26px) saturate(170%);
+  animation:t-in .5s var(--ease) both}
+.thanks.hidden{display:none}
+.thanks.out{animation:t-out .55s ease-in forwards}
+@keyframes t-in{from{opacity:0}}
+@keyframes t-out{to{opacity:0}}
+
+.thanks-card{
+  width:min(340px,86vw);text-align:center;padding:34px 30px 28px;border-radius:26px;
+  background:#ffffffdb;backdrop-filter:blur(30px) saturate(200%);
+  border:1px solid var(--glass-edge);
+  box-shadow:0 30px 70px #16162b2b, inset 0 1px 0 #fff;
+  animation:t-pop .55s cubic-bezier(.18,1.15,.35,1) both .06s;
+  display:flex;flex-direction:column;align-items:center;gap:2px}
+@keyframes t-pop{from{opacity:0;transform:translateY(20px) scale(.93)}}
+
+.tick{width:54px;height:54px;margin-bottom:12px;overflow:visible}
+.tick circle{fill:none;stroke:var(--allow);stroke-width:2.5;opacity:.28;
+  stroke-dasharray:145;stroke-dashoffset:145;
+  animation:draw .55s var(--ease) forwards .2s}
+.tick path{fill:none;stroke:var(--allow);stroke-width:4;stroke-linecap:round;
+  stroke-linejoin:round;stroke-dasharray:36;stroke-dashoffset:36;
+  animation:draw .4s var(--ease) forwards .5s}
+@keyframes draw{to{stroke-dashoffset:0}}
+
+.thanks-card h2{font-family:var(--font-display);font-size:32px;font-weight:400;
+  line-height:1.25;color:var(--ink);padding-block:2px}
+.t-sub{font-size:13.5px;color:var(--ink-mid);margin-bottom:14px}
+.t-amt{font-family:var(--font-display);font-size:44px;line-height:1.15;color:var(--orange);
+  font-variant-numeric:tabular-nums;padding-block:2px}
+.t-items{font-size:12.5px;color:var(--ink-mid);line-height:1.5;margin-top:8px;max-width:26ch}
+.t-meta{font:500 10.5px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;
+  color:var(--ink-dim);margin-top:10px}
+.t-shop{font-family:var(--font-display);font-size:15px;color:var(--ink-dim);
+  margin-top:16px;padding-top:14px;border-top:1px solid var(--line);width:100%}
+
+@media (prefers-reduced-motion:reduce){
+  .tick circle,.tick path{animation:none;stroke-dashoffset:0}
+  .thanks,.thanks-card{animation:none}
+}
