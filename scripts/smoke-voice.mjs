@@ -42,6 +42,12 @@ if (p.stt) {
 } else console.log("  ⚠️  no STT provider");
 
 console.log("\n────────────────────────────────────────────────");
-console.log(fails ? " ❌ Some providers failed — see above." : " ✅ Voice round trip works.");
+if (fails && p.stt === "fish") {
+  console.log(" ⚠️  Server-side speech-to-text is unavailable, but the app does not need it:");
+  console.log("     Chrome and Edge transcribe in the browser for free. This only matters");
+  console.log("     for Safari/Firefox — set DEEPGRAM_API_KEY to cover those.");
+} else {
+  console.log(fails ? " ❌ Some providers failed — see above." : " ✅ Voice round trip works.");
+}
 console.log("────────────────────────────────────────────────\n");
 process.exit(fails ? 1 : 0);

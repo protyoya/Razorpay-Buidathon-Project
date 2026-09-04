@@ -4,6 +4,7 @@ import { config, assertRazorpay, assertLlm } from "./config.js";
 import { runTurn } from "./agent.js";
 import { newSession, cartItems, cartTotal, cartSnapshot, catalog, toolDefs, execute } from "./tools.js";
 import { getTrail, subscribe, verifyChain, record, reset } from "./audit.js";
+import { activeProvider } from "./llm.js";
 
 import { transcribe, synthesize, voiceEnabled, providers } from "./voice.js";
 import { verifyPaymentLinkSignature, verifyCheckoutSignature, createOrder, rupeesToPaise, cancelPaymentLink } from "./razorpay.js";
@@ -448,7 +449,12 @@ app.get("/payment/callback", (req, res) => {
 app.listen(config.port, () => {
   console.log(`\n  Kaira running on http://localhost:${config.port}`);
   console.log(`  Razorpay: ${config.razorpay.keyId} (TEST MODE)`);
-  console.log(`  LLM:      ${config.llm.model} via ${config.llm.provider}` +
-              (config.llm.groqKey ? ` (failover: Groq ${config.llm.groqModel})` : "") +
-              (config.llm.strictCompat ? " (strict-compat mode)" : ` @ effort=${config.llm.effort}`) + "\n");
+  // Report who is actually serving, not just who is configured as primary.
+  const who = activeProvider();
+  const line = who === "groq"
+    ? `${config.llm.groqModel} via Groq`
+    : `${config.llm.model} via ${config.llm.provider}` +
+      (config.llm.groqKey ? ` (failover: Groq ${config.llm.groqModel})` : "");
+  console.log(`  LLM:      ${line}` +
+              (config.llm.strictCompat ? " (strict-compat)" : ` @ effort=${config.llm.effort}`) + "\n");
 });
