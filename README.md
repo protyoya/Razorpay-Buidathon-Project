@@ -33,10 +33,20 @@ The mandate is not a line in a prompt. It is code the model cannot argue with.
 | **Visible audit trail** | SHA-256 hash chain, tamper-evident, in-app and at `GET /api/audit` |
 | **One failure handled gracefully** | A real Razorpay decline → apology, human explanation, retry. Never claims false success |
 
-| Both halves of the brief | |
+**Both halves of the brief**
+
+| | |
 |---|---|
-| *Grow the merchant's revenue* | Conversational checkout, plus cross-sell and upsell grounded in real stock |
-| *Make them sellable to AI buyers* | An MCP server and a discovery manifest — an outside agent transacts under the same mandate |
+| *Grow the merchant's revenue* | Cross-sell and upsell drawn from real catalogue stock |
+| *Make them sellable to AI buyers* | An MCP server and a discovery manifest, so an outside agent transacts under the same mandate |
+
+**Three of the four example directions**
+
+| | |
+|---|---|
+| **Conversational in-app checkout** | Search, cart and payment inside the chat, on Razorpay Orders and Standard Checkout |
+| **Upsell & cross-sell agent** | `suggest_addons` reads pairings from the catalogue, so the agent cannot invent a product to sell |
+| **Agent-readable catalog** | `/.well-known/agent-manifest.json` and `/api/agent/catalog` publish the products, the tool schemas and the spend limits |
 
 ---
 
